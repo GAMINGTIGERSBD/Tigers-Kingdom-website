@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" type="image/x-icon" href="downloading.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download</title>
+    <style>
+        body {
+            background-color: #121212; /* Deep dark background */
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #e0e0e0; /* Light text color */
+            text-align: center;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+            line-height: 1.6;
+            background: url('dbg.gif') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            min-height: 100vh;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        .search-bar {
+            margin-bottom: 30px;
+            padding: 15px;
+            width: 100%;
+            max-width: 600px;
+            box-sizing: border-box;
+            border-radius: 50px; /* Smooth rounded corners */
+            border: 2px solid #00bfff; /* Neon blue border */
+            background-color: #1f1f1f; /* Dark background for input */
+            color: #e0e0e0;
+            font-size: 18px;
+            text-align: center;
+            transition: border 0.3s ease;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: #009acd; /* Change border color on focus */
+            box-shadow: 0 0 15px #009acd; /* Glowing effect */
+        }
+
+        .container a {
+            display: block;
+            font-size: 20px;
+            font-weight: bold;
+            color: #00bfff; /* Neon blue text */
+            text-decoration: none;
+            margin: 20px 0;
+            padding: 15px 20px;
+            background-color: #1a1a1a; /* Darker background for links */
+            border-radius: 12px;
+            border: 2px solid transparent; /* Border for hover effect */
+            transition: background-color 0.3s ease, transform 0.3s ease, border-color 0.3s ease; /* Smooth transitions */
+            overflow-wrap: break-word; /* Prevent text overflow */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis; /* Adds "..." to cut-off text */
+        }
+
+        .container a:hover {
+            background-color: #282828; /* Slightly lighter background on hover */
+            border-color: #00bfff; /* Neon blue border on hover */
+            transform: translateY(-5px); /* Lift effect */
+        }
+
+        .container a:active {
+            transform: translateY(2px); /* Pressed effect */
+        }
+
+        .container a::before {
+            content: "🎮 "; /* Add a gaming icon before each link */
+        }
+
+        .container a:hover::before {
+            content: "⚡ "; /* Change icon on hover */
+        }
+    </style>
+</head>
+<body>
+    <!-- Search Bar -->
+    <div class="container">
+        <input type="text" class="search-bar" placeholder="Search for games..." oninput="searchGames()">
+    </div>
+
+    <!-- Game Links -->
+    <div class="container" id="gameList">
+        <a href="https://drive.google.com/file/d/1-BR-wJ1PpQCIclEF9Or1dScEcDKp_EEh/view"><b>BEN 10 PROTECTOR OF THE EARTH</b></a>
+        <a href="https://spider-man-ultimate-power.en.softonic.com/android"><b>ULTIMATE SPIDER MAN</b></a>
+        <a href="https://play.google.com/store/apps/details?id=com.starplay.spider.fighter.openworld"><b>SPIDER FIGHTER 3</b></a>
+        <a href="https://t.me/Gamingtigersbd/3"><b>THE AMAZING SPIDER-MAN 2 (JOIN TELEGRAM)</b></a>
+        <a href="https://www.emulatorgames.net/roms/playstation-portable/dragon-ball-z-tenkaichi-tag-team/"><b>DRAGON BALL Z TENKACHI TAG TEAM PSP ISO</b></a>
+        <a href="https://cdromance.org/psp/dbz-shin-budokai-usa/"><b>DRAGON BALL Z SHIN BODOKAI PSP ISO</b></a>
+        <a href="https://www.mediafire.com/file/t45gaa705on19qr/Spider-Man_Miles_Morales_V4_Modded_By_AdarshMPro.apk/file?dkey=wdj0uy971v0&r=778"><b>PS5 MILES MORALES SPIDERMAN</b></a>
+        <a href="https://youtu.be/Hzopp8O7o8E?si=tu0esjqI55VfVwlp"><b>SPIDERMAN TOLAL MEHEM CREDIT: PeasePlay</b></a>
+        <a href="https://www.mediafire.com/file/jj970k361tha2bd/com.rusergames.milesmorales.version1.apk/file"><b>SPIDER MAN MILES MORALEF FANMADE BETTER</b></a>
+        <a href="https://play.google.com/store/apps/details?id=com.Srioz.ProjectClear"><b>Recurrence</b></a>
+        <a href="https://play.google.com/store/apps/details?id=com.netease.newspike"><b>Blood Strike - FPS for all</b></a>
+        <a href="https://youtu.be/cHnZ0bzqx7U?si=oqm0-cIUoj4fHY_t"><b>THE AMAZING SPIDER MAN 1 CREDIT: mighty boy</b></a>
+        <a href="https://youtu.be/Af0hNB..."><b>SPIDERMAN TOLAL MEHEM CREDIT: PeasePlay</b></a>
+        <a href="https://www.emulatorgames.net/roms/playstation-portable/ben-10-alien-force/"><b>BEN 10 ALIEN FORCE PSP</b></a>
+        <a href="https://www.dropbox.com/scl/fi/suv00q45lm9g10jslep96/minecraft-1-21-51.rar?rlkey=r03f4guiple2ikoz20ki7kuez&st=3oc9aylm&dl=0"></b>MINECRAFT MCPE</a>
+    </div>
+
+    <script>
+        function searchGames() {
+            const input = document.querySelector('.search-bar').value.toLowerCase();
+            const gameLinks = document.querySelectorAll('.container a');
+
+            gameLinks.forEach(link => {
+                const text = link.textContent.toLowerCase();
+                if (text.includes(input)) {
+                    link.style.display = "block";
+                } else {
+                    link.style.display = "none";
+                }
+            });
+        }
+    </script>
+</body>
+</html>

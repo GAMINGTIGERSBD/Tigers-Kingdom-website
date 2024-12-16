@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAPTCHA</title>
+    <link rel="stylesheet" href="captcha.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/ldrs/dist/auto/waveform.js"></script>
+</head>
+<body onload="generateCaptcha()">
+    <l-waveform size="35" stroke="3.5" speed="1" color="black" style="display: block; margin: 20px auto;"></l-waveform>
+
+    <div id="captcha-container">
+        <div id="user-input" class="inline">
+            <label for="submit" class="visually-hidden">Enter CAPTCHA code</label>
+            <input type="text" id="submit" placeholder="Enter CAPTCHA" aria-label="Captcha code"/>
+        </div>
+
+        <div class="inline" onclick="generateCaptcha()" role="button" aria-label="Refresh CAPTCHA">
+            <i class="fas fa-sync refresh-icon"></i>
+        </div>
+
+        <div id="image" class="inline"></div>
+        <input type="button" id="btn" onclick="validateCaptcha()" value="Submit" aria-label="Submit CAPTCHA"/>
+
+        <p id="feedback" role="alert"></p>
+    </div>
+
+    <style>
+        body {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(270deg, #ff9a9e, #fad0c4, #fbc2eb);
+            background-size: 600% 600%;
+            animation: gradientBG 10s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        #captcha-container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #image {
+            margin-top: 10px;
+            font-weight: bold;
+            font-style: italic;
+            font-size: 1.5rem;
+            letter-spacing: 3px;
+            border: 2px solid red;
+            padding: 10px;
+            width: 100px;
+            display: inline-block;
+            user-select: none;
+            background: #f7f7f7;
+            text-decoration: line-through;
+        }
+
+        #user-input input {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 200px;
+        }
+
+        .inline {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        #btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+
+        #btn:hover {
+            background-color: #0056b3;
+        }
+
+        .refresh-icon {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #007bff;
+            transition: transform 0.3s;
+        }
+
+        .refresh-icon:hover {
+            transform: rotate(360deg);
+        }
+
+        #feedback {
+            margin-top: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+            padding: 0;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+    </style>
+
+    <script>
+        let captchaText;
+
+        function generateCaptcha() {
+            const captchaElement = document.getElementById("image");
+            const randomChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            let uniqueCaptcha = "";
+
+            for (let i = 0; i < 5; i++) {
+                uniqueCaptcha += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
+            }
+
+            captchaText = uniqueCaptcha;
+            captchaElement.textContent = uniqueCaptcha;
+
+            // Clear feedback
+            document.getElementById("feedback").textContent = "";
+            document.getElementById("submit").value = "";
+        }
+
+        function validateCaptcha() {
+            const userInput = document.getElementById("submit").value;
+            const feedbackElement = document.getElementById("feedback");
+
+            if (userInput === captchaText) {
+                feedbackElement.textContent = "Captcha Matched! Redirecting...";
+                feedbackElement.style.color = "green";
+                setTimeout(() => {
+                    window.location.href = "download.html";
+                }, 1000);
+            } else {
+                feedbackElement.textContent = "Captcha incorrect. Please try again.";
+                feedbackElement.style.color = "red";
+                shakeScreen();
+                generateCaptcha();
+            }
+        }
+
+        function shakeScreen() {
+            const body = document.body;
+            body.classList.add('shake');
+            setTimeout(() => {
+                body.classList.remove('shake');
+            }, 500);
+        }
+
+        // Reload page after timeout
+        setTimeout(() => {
+            alert("You are slow! Please try again.");
+            window.location.reload();
+        }, 30000);
+    </script>
+
+    <style>
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0% { transform: translate(0); }
+            25% { transform: translate(-5px, 0); }
+            50% { transform: translate(5px, 0); }
+            75% { transform: translate(-5px, 0); }
+            100% { transform: translate(0); }
+        }
+    </style>
+</body>
+</html>
